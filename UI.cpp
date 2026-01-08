@@ -2,12 +2,45 @@
 #include <windows.h>
 #include <io.h>
 #include <fcntl.h>
+#include "function.h"
+
+HWND hEdit = NULL;
+WNDPROC oldEditProc;
+
+LRESULT CALLBACK EditSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    if (uMsg == WM_CHAR && wParam == VK_RETURN) {
+        wchar_t buffer[256];
+        GetWindowTextW(hwnd, buffer, 256);
+        CommandRun(buffer); // 명령어 실행
+        
+        SetWindowTextW(hwnd, L""); // 입력창 비우기
+        return 0; // 엔터 키 소리 안나게
+    }
+    return CallWindowProc(oldEditProc, hwnd, uMsg, wParam, lParam);
+}
+
 
 // 윈도우 프로시저
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_CREATE) {
         std::wcout << L"윈도우 생성!" << std::endl;
-    } 
+        hEdit = hEdit = CreateWindowExW(
+            WS_EX_CLIENTEDGE,
+            L"EDIT",
+            L"",
+            WS_CHILD | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL,
+            10, 10, 760, 30,
+            hwnd, (HMENU)1, NULL, NULL
+        );
+        
+        oldEditProc = (WNDPROC)SetWindowLongPtrW(hEdit, GWLP_WNDPROC, (LONG_PTR)EditSubclassProc);
+        
+        SetFocus(hEdit); // 포커스 설정
+    }
+
+
+
+
     if (uMsg == WM_DESTROY) {
         std::wcout << L"프로그램 종료" << std::endl;
         PostQuitMessage(0);
