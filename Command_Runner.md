@@ -18,5 +18,5 @@ g++ UI.cpp -o out.exe -lgdi32 -luser32 -DUNICODE -D_UNICODE
 ```
 현재 등록된 커맨드
 ```base
-없음.
+백준 과제 : github, baekjoon, vscode 실행
 ```

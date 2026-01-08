@@ -11,9 +11,16 @@ LRESULT CALLBACK EditSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
     if (uMsg == WM_CHAR && wParam == VK_RETURN) {
         wchar_t buffer[256];
         GetWindowTextW(hwnd, buffer, 256);
-        CommandRun(buffer); // 명령어 실행
+        if (CommandRun(buffer)) { // 명령어 실행
+           std::wcout << buffer << L" 명령 실행 완료" << '\n';
+           MessageBoxW(NULL, L"명령이 실행되었습니다!", L"알림", MB_RIGHT);
+           SetWindowTextW(hwnd, L""); // 입력창 비우기
+        } else {
+            std::wcout << buffer << L" 명령이 존재하지 않습니다." << '\n';
+            MessageBoxW(NULL, L" 명령이 존재하지 않습니다.\n다시 확인해주세요.", L"알림", MB_RIGHT);
+        }
         
-        SetWindowTextW(hwnd, L""); // 입력창 비우기
+        SetFocus(hEdit);
         return 0; // 엔터 키 소리 안나게
     }
     return CallWindowProc(oldEditProc, hwnd, uMsg, wParam, lParam);
