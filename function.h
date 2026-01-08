@@ -15,8 +15,6 @@ bool CommandRun(std::wstring command)
     
     
     
-    
-    
     else {
         return false;
     }

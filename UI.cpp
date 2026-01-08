@@ -5,7 +5,8 @@
 #include "function.h"
 
 HWND hEdit = NULL;
-WNDPROC oldEditProc;
+WNDPROC oldEditProc = NULL;
+HFONT hFont = NULL;
 
 LRESULT CALLBACK EditSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_CHAR && wParam == VK_RETURN) {
@@ -31,15 +32,35 @@ LRESULT CALLBACK EditSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_CREATE) {
         std::wcout << L"윈도우 생성!" << std::endl;
+
+        hFont = CreateFontW(
+            20,                    // 높이 (폰트 크기)
+            0,                     // 너비 (0이면 자동)
+            0, 0,                  // 각도
+            FW_NORMAL,             // 두께 (FW_BOLD, FW_NORMAL 등)
+            FALSE,                 // 이탤릭
+            FALSE,                 // 밑줄
+            FALSE,                 // 취소선
+            DEFAULT_CHARSET,       // 문자셋
+            OUT_DEFAULT_PRECIS,
+            CLIP_DEFAULT_PRECIS,
+            DEFAULT_QUALITY,
+            DEFAULT_PITCH | FF_DONTCARE,
+            L"Cascadia Code"           // 폰트 이름
+        );
+
         hEdit = hEdit = CreateWindowExW(
             WS_EX_CLIENTEDGE,
             L"EDIT",
             L"",
             WS_CHILD | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL,
-            10, 10, 760, 30,
+            10, 10, 200, 30,
             hwnd, (HMENU)1, NULL, NULL
         );
-        
+
+        // Edit에 폰트 적용
+        SendMessageW(hEdit, WM_SETFONT, (WPARAM)hFont, TRUE);
+
         oldEditProc = (WNDPROC)SetWindowLongPtrW(hEdit, GWLP_WNDPROC, (LONG_PTR)EditSubclassProc);
         
         SetFocus(hEdit); // 포커스 설정
@@ -75,9 +96,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         hWnd = CreateWindowEx(
             0,
             L"CommandUI",
-            L"Command Runner",
+            L"Command",
             WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, 800, 600,
+            1600, 70, 240, 90,
             NULL, NULL, hInstance, NULL
         );
     }
