@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-bool CommandRun(std::wstring command)
+std::wstring CommandRun(std::wstring command)
 {
     std::wcout << "Command : " << command << '\n';
 
@@ -12,11 +12,15 @@ bool CommandRun(std::wstring command)
         ShellExecuteW(NULL, L"open", L"https://www.acmicpc.net/step", NULL, NULL, SW_SHOWNORMAL);
         ShellExecuteW(NULL, L"open", L"code", L"C:/Users/chaey/Project/baekjoon", NULL, SW_SHOWNORMAL);
     }
-    
+    if (command == L"exit" || command == L"Exit" || command == L"EXIT") {
+        return L"exit";
+    }
     
     
     else {
-        return false;
+        return L"failed";
     }
-    return true;
+
+    
+    return L"success";
 }
