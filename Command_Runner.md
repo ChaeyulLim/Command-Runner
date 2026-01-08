@@ -7,7 +7,7 @@
 ```
 프로그램 컴파일 링크 목록 및 컴파일 방법
 ```
-g++ UI.cpp -o out.exe -lgdi32 -luser32 -DUNICODE -D_UNICODE
+g++ UI.cpp -o CommandRunner.exe -mwindows -lgdi32 -luser32 -DUNICODE -D_UNICODE
 ```
 
 
