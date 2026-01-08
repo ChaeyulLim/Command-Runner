@@ -16,14 +16,13 @@ LRESULT CALLBACK EditSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
         if (CommandRun(buffer) == L"success") { // 명령어 실행
 
            std::wcout << buffer << L" 명령 실행 완료" << '\n'; // log
-        //    MessageBoxW(NULL, L"명령이 실행되었습니다!", L"알림", MB_RIGHT);
            SetWindowTextW(hwnd, L""); // 입력창 비우기
 
         } else if (CommandRun(buffer) == L"exit"){
             DestroyWindow(hWnd); // exit
         } else {
             std::wcout << buffer << L" 명령이 존재하지 않습니다." << '\n';
-            MessageBoxW(NULL, L" 명령이 존재하지 않습니다.\n다시 확인해주세요.", L"알림", MB_RIGHT);
+            MessageBoxW(NULL, L" 명령이 존재하지 않습니다.", L"에러", MB_RIGHT);
         }
         
         SetFocus(hEdit);
