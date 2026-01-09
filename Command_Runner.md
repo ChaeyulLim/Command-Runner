@@ -22,4 +22,10 @@ g++ UI.cpp -o CommandRunner.exe -mwindows -lgdi32 -luser32 -DUNICODE -D_UNICODE
 vscode, vsc : vscode 실행
 git, github : github/ChaeyulLim 으로 이동
 exit : 종료
+shutdown : pc를 완전히 종료한다.
+reboot : 컴퓨터를 다시 시작한다.
+```
+
+추가 예정
+```base
 ```

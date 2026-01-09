@@ -17,6 +17,10 @@ std::wstring CommandRun(std::wstring command)
         ShellExecuteW(NULL, L"open", L"C:\\Users\\chaey\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe", NULL, NULL, SW_SHOWNORMAL);
     } else if (command == L"exit" || command == L"Exit" || command == L"EXIT") {
         return L"exit";
+    } else if (command == L"shutdown" || command == L"Shutdown" || command == L"SHUTDOWN") {
+        ShellExecuteW(NULL, L"open", L"shutdown", L"/s /t 1", NULL, SW_HIDE);
+    } else if (command == L"reboot" || command == L"Reboot" || command == L"REBOOT") {
+        ShellExecuteW(NULL, L"open", L"shutdown", L"/r /t 1", NULL, SW_HIDE);
     }
     
     
