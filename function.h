@@ -21,6 +21,10 @@ std::wstring CommandRun(std::wstring command)
         ShellExecuteW(NULL, L"open", L"shutdown", L"/s /t 1", NULL, SW_HIDE);
     } else if (command == L"reboot" || command == L"Reboot" || command == L"REBOOT") {
         ShellExecuteW(NULL, L"open", L"shutdown", L"/r /t 1", NULL, SW_HIDE);
+    } else if (command == L"reboot" || command == L"Reboot" || command == L"REBOOT") {
+        ShellExecuteW(NULL, L"open", L"shutdown", L"/r /t 1", NULL, SW_HIDE);
+    } else if (command == L"ai" || command == L"Ai" || command == L"AI" || command == L"claude" || command == L"CLAUDE") {
+        ShellExecuteW(NULL, L"open", L"\\Users\\chaey\\AppData\\Local\\AnthropicClaude\\claude.exe", NULL, NULL, SW_HIDE);
     }
     
     
